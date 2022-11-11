@@ -961,7 +961,7 @@ function toNestedArray(shape, a, isComplex = false) {
   const size = shape.reduce((acc, c) => acc * c) * (isComplex ? 2 : 1);
 
   if (size === 0) {
-    // A tensor with shape zero should be turned into empty list.
+    // A tensor with shape zero should be turned into empty lisFt.
     return [];
   }
 
@@ -81187,9 +81187,9 @@ ENV.registerFlag('WASM_HAS_MULTITHREAD_SUPPORT', async () => {
   }
 });
 },{"@tensorflow/tfjs-core":"node_modules/@tensorflow/tfjs-core/dist/index.js"}],"node_modules/@tensorflow/tfjs-backend-wasm/wasm-out/tfjs-backend-wasm-threaded-simd.js":[function(require,module,exports) {
-var __filename = "C:\\Users\\user\\Desktop\\tfjs-models-master\\face-landmarks-detection\\demos\\live_video\\node_modules\\@tensorflow\\tfjs-backend-wasm\\wasm-out\\tfjs-backend-wasm-threaded-simd.js";
+var __filename = "/Users/li-senlin/Documents/CG_Lab/CA/tfjs-models-master/face-landmarks-detection/demos/live_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out/tfjs-backend-wasm-threaded-simd.js";
 var process = require("process");
-var __dirname = "C:\\Users\\user\\Desktop\\tfjs-models-master\\face-landmarks-detection\\demos\\live_video\\node_modules\\@tensorflow\\tfjs-backend-wasm\\wasm-out";
+var __dirname = "/Users/li-senlin/Documents/CG_Lab/CA/tfjs-models-master/face-landmarks-detection/demos/live_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out";
 var global = arguments[3];
 var define;
 
@@ -81224,9 +81224,9 @@ exports.wasmWorkerContents = void 0;
 const wasmWorkerContents = '"use strict";var Module={};var ENVIRONMENT_IS_NODE=typeof process==="object"&&typeof process.versions==="object"&&typeof process.versions.node==="string";if(ENVIRONMENT_IS_NODE){var nodeWorkerThreads=require("worker_threads");var parentPort=nodeWorkerThreads.parentPort;parentPort.on("message",function(data){onmessage({data:data})});var fs=require("fs");Object.assign(global,{self:global,require:require,Module:Module,location:{href:__filename},Worker:nodeWorkerThreads.Worker,importScripts:function(f){(0,eval)(fs.readFileSync(f,"utf8"))},postMessage:function(msg){parentPort.postMessage(msg)},performance:global.performance||{now:function(){return Date.now()}}})}function threadPrintErr(){var text=Array.prototype.slice.call(arguments).join(" ");if(ENVIRONMENT_IS_NODE){fs.writeSync(2,text+"\n");return}console.error(text)}function threadAlert(){var text=Array.prototype.slice.call(arguments).join(" ");postMessage({cmd:"alert",text:text,threadId:Module["_pthread_self"]()})}var err=threadPrintErr;self.alert=threadAlert;Module["instantiateWasm"]=((info,receiveInstance)=>{var instance=new WebAssembly.Instance(Module["wasmModule"],info);receiveInstance(instance);Module["wasmModule"]=null;return instance.exports});self.onmessage=(e=>{try{if(e.data.cmd==="load"){Module["wasmModule"]=e.data.wasmModule;Module["wasmMemory"]=e.data.wasmMemory;Module["buffer"]=Module["wasmMemory"].buffer;Module["ENVIRONMENT_IS_PTHREAD"]=true;if(typeof e.data.urlOrBlob==="string"){importScripts(e.data.urlOrBlob)}else{var objectUrl=URL.createObjectURL(e.data.urlOrBlob);importScripts(objectUrl);URL.revokeObjectURL(objectUrl)}WasmBackendModuleThreadedSimd(Module).then(function(instance){Module=instance})}else if(e.data.cmd==="run"){Module["__performance_now_clock_drift"]=performance.now()-e.data.time;Module["__emscripten_thread_init"](e.data.threadInfoStruct,0,0,1);Module["establishStackSpace"]();Module["PThread"].receiveObjectTransfer(e.data);Module["PThread"].threadInit();try{var result=Module["invokeEntryPoint"](e.data.start_routine,e.data.arg);if(Module["keepRuntimeAlive"]()){Module["PThread"].setExitStatus(result)}else{Module["__emscripten_thread_exit"](result)}}catch(ex){if(ex!="unwind"){if(ex instanceof Module["ExitStatus"]){if(Module["keepRuntimeAlive"]()){}else{Module["__emscripten_thread_exit"](ex.status)}}else{throw ex}}}}else if(e.data.cmd==="cancel"){if(Module["_pthread_self"]()){Module["__emscripten_thread_exit"](-1)}}else if(e.data.target==="setimmediate"){}else if(e.data.cmd==="processThreadQueue"){if(Module["_pthread_self"]()){Module["_emscripten_current_thread_process_queued_calls"]()}}else if(e.data.cmd==="processProxyingQueue"){if(Module["_pthread_self"]()){Module["_emscripten_proxy_execute_queue"](e.data.queue)}}else{err("worker.js received unknown command "+e.data.cmd);err(e.data)}}catch(ex){err("worker.js onmessage() captured an uncaught exception: "+ex);if(ex&&ex.stack)err(ex.stack);if(Module["__emscripten_thread_crashed"]){Module["__emscripten_thread_crashed"]()}throw ex}});';
 exports.wasmWorkerContents = wasmWorkerContents;
 },{}],"node_modules/@tensorflow/tfjs-backend-wasm/wasm-out/tfjs-backend-wasm.js":[function(require,module,exports) {
-var __filename = "C:\\Users\\user\\Desktop\\tfjs-models-master\\face-landmarks-detection\\demos\\live_video\\node_modules\\@tensorflow\\tfjs-backend-wasm\\wasm-out\\tfjs-backend-wasm.js";
+var __filename = "/Users/li-senlin/Documents/CG_Lab/CA/tfjs-models-master/face-landmarks-detection/demos/live_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out/tfjs-backend-wasm.js";
 var process = require("process");
-var __dirname = "C:\\Users\\user\\Desktop\\tfjs-models-master\\face-landmarks-detection\\demos\\live_video\\node_modules\\@tensorflow\\tfjs-backend-wasm\\wasm-out";
+var __dirname = "/Users/li-senlin/Documents/CG_Lab/CA/tfjs-models-master/face-landmarks-detection/demos/live_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out";
 var define;
 
 var WasmBackendModule = (() => {
@@ -97407,9 +97407,46 @@ class Camera {
 
   drawResults(faces, triangulateMesh, boundingBox) {
     (0, _util.drawResults)(this.ctx, faces, triangulateMesh, boundingBox);
-  }
+    runModel(view => {
+      console.log(faces)
+      /*眉毛控制*/
+      view.browRY = (faces[0].keypoints[27].y - faces[0].keypoints[223].y -7.5)/2;
+      view.browLY = (faces[0].keypoints[257].y - faces[0].keypoints[443].y -7.5)/2;
+      view.browRX = (faces[0].keypoints[223].x-250)/500*(-1);
+      view.browLX = (faces[0].keypoints[443].x-250)/500*(-1);
 
+      /*左右擺頭*/
+      view.angleX = (faces[0].keypoints[226].z-faces[0].keypoints[446].z)/2;
+
+      /*上下點頭*/
+      //抖動
+      //view.angleY = (faces[0].keypoints[151].z-faces[0].keypoints[175].z)*2;
+      //穩定
+      view.angleY = (faces[0].keypoints[168].y-250)/100*30*(-1);
+
+      /*歪頭*/
+
+
+      /*眼睛控制*/
+      if((faces[0].keypoints[145].y)-(faces[0].keypoints[159].y) < 3){
+        view.eyeLOpen = 0; //右眼閉
+      }
+      else{
+        view.eyeLOpen = 1; //右眼開
+      }
+      if((faces[0].keypoints[374].y)-(faces[0].keypoints[386].y) < 3){
+        view.eyeROpen = 0;
+      }
+      else{
+        view.eyeROpen = 1;
+      }
+
+      /*嘴巴控制*/
+
+    });
+  }
 }
+
 
 exports.Camera = Camera;
 },{"./shared/params":"src/shared/params.js","./shared/util":"src/shared/util.js"}],"src/shared/option_panel.js":[function(require,module,exports) {
